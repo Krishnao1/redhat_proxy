@@ -1,0 +1,33 @@
+function disableproxy()
+{
+###############################################################################################################
+###############################################################################################################
+## current proxy is 172.25.6.6:3128 without authentication ....
+
+
+sudo bash -c 'echo PATH=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games\"> /etc/environment'
+sudo bash -c 'echo "">/etc/profile.d/proxy.sh'
+sudo bash -c 'echo "">/etc/yum.conf'
+sudo bash -c 'echo "">/etc/dnf/dnf.conf'
+
+
+
+
+}
+function enableproxy()
+{	
+################changing in environment########################
+	sudo bash -c 'echo PATH=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games\" > /etc/environment'
+	sudo bash -c 'echo Acquire::http::proxy \"http://172.25.6.6:3128\">>/etc/environment'
+	sudo bash -c 'echo Acquire::https::proxy \"https://172.25.6.6:3128\">>/etc/environment'
+	sudo bash -c 'echo Acquire::ftp::proxy \"ftp://172.25.6.6:3128\">>/etc/environment'
+	sudo bash -c 'echo Acquire::socks::proxy \"socks://172.25.6.6:3128\">>/etc/environment'
+###############changing in dnf.conf ######################
+	sudo bash -c 'echo proxy=http://172.25.6.6:3128\;>/etc/dnf/dnf.conf'	
+        sudo bash -c 'echo  proxy=http://172.25.6.6:3128\;>>/etc/yum.conf'
+############### for all user#######################################################
+          
+    sudo bash -c 'echo export ftp_proxy=ftp://172.25.6.6:3128\;>>/etc/profile.d/proxy.sh'
+    sudo bash -c 'echo export https_proxy=ftp://172.25.6.6:3128\;>>/etc/profile.d/proxy.sh'
+    sudo bash -c 'echo export http_proxy=ftp://172.25.6.6:3128\;>>/etc/profile.d/proxy.sh'
+}
